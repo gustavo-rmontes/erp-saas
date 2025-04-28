@@ -3,6 +3,7 @@ import DashboardCard from '../components/Dashboard/DashboardCard';
 import Chart from '../components/Dashboard/Chart';
 import { getDashboardData, getFluxoCaixaData } from '../services/dashboardService';
 import { toast } from 'sonner';
+import './Dashboard.css';
 
 const Dashboard = () => {
   const [timeRange, setTimeRange] = useState('month');
@@ -35,14 +36,9 @@ const Dashboard = () => {
 
   return (
     <div style={{ padding: '1.5rem' }}>
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center', 
-        marginBottom: '1.5rem' 
-      }}>
-        <h1 style={{ fontSize: '1.75rem', fontWeight: '600' }}>Dashboard</h1>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div className="dashboard-header">
+        <h1 className="dashboard-title">Dashboard</h1>
+        <div className="dashboard-timerange">
           <button 
             className={`btn ${timeRange === 'week' ? 'btn-primary' : 'btn-outline'}`}
             onClick={() => setTimeRange('week')}
@@ -112,21 +108,13 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="grid" style={{ marginTop: '1.5rem' }}>
+      <div className="dashboard-chart-container">
         <div className="col-8 col-lg-12">
-          <div className="card" style={{ height: '400px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-              <h2 style={{ fontSize: '1.125rem', fontWeight: '500' }}>Fluxo de Caixa</h2>
+          <div className="card">
+            <div className="chart-header">
+              <h2 className="chart-title">Fluxo de Caixa</h2>
               <div>
-                <select 
-                  style={{
-                    backgroundColor: '#252525',
-                    border: '1px solid #333',
-                    color: '#f8f9fa',
-                    padding: '0.375rem 0.75rem',
-                    borderRadius: '4px'
-                  }}
-                >
+                <select className="chart-select">
                   <option value="area">Área</option>
                   <option value="bar">Barras</option>
                 </select>
@@ -136,7 +124,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="col-4 col-lg-12">
-          <div className="card" style={{ height: '400px' }}>
+          <div className="card">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
               <h2 style={{ fontSize: '1.125rem', fontWeight: '500' }}>Despesas por Categoria</h2>
             </div>

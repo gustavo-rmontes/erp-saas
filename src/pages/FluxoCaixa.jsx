@@ -1,12 +1,11 @@
-
 import { useState } from 'react';
 import Chart from '../components/Dashboard/Chart';
+import './FluxoCaixa.css';
 
 const FluxoCaixa = () => {
   const [timeRange, setTimeRange] = useState('month');
   const [chartType, setChartType] = useState('area');
   
-  // Dados fictícios para os gráficos
   const fluxoCaixaData = [
     { name: '01/04', receitas: 2500, despesas: 1800, saldo: 700 },
     { name: '08/04', receitas: 3200, despesas: 2500, saldo: 700 },
@@ -17,7 +16,6 @@ const FluxoCaixa = () => {
     { name: '13/05', receitas: 5500, despesas: 4100, saldo: 1400 },
   ];
 
-  // Dados projetados (previsão)
   const projecaoData = [
     { name: '29/04', receitas: 5200, despesas: 3500, saldo: 1700 },
     { name: '06/05', receitas: 4800, despesas: 3700, saldo: 1100 },
@@ -29,15 +27,10 @@ const FluxoCaixa = () => {
   ];
 
   return (
-    <div style={{ padding: '1.5rem' }}>
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center', 
-        marginBottom: '1.5rem' 
-      }}>
-        <h1 style={{ fontSize: '1.75rem', fontWeight: '600' }}>Fluxo de Caixa</h1>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+    <div className="fluxo-container">
+      <div className="fluxo-header">
+        <h1 className="fluxo-title">Fluxo de Caixa</h1>
+        <div>
           <button className="btn btn-outline" style={{ marginRight: '0.75rem' }}>Exportar PDF</button>
           <button className="btn btn-outline">Exportar Excel</button>
         </div>
@@ -45,76 +38,62 @@ const FluxoCaixa = () => {
 
       <div className="grid">
         <div className="col-4 col-lg-6 col-md-12">
-          <div style={{
-            backgroundColor: '#1e1e1e',
-            borderRadius: '8px',
-            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-            padding: '1.25rem',
-            height: '100%'
-          }}>
-            <h3 style={{ fontSize: '1rem', color: '#a0a0a0', marginBottom: '0.5rem' }}>Fluxo Atual (Mês)</h3>
-            <div style={{ marginTop: '1rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-                <span style={{ color: '#f8f9fa' }}>Entradas:</span>
-                <span style={{ color: '#4CAF50', fontWeight: '500' }}>R$ 42.800,00</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-                <span style={{ color: '#f8f9fa' }}>Saídas:</span>
-                <span style={{ color: '#FF5252', fontWeight: '500' }}>R$ 35.320,00</span>
-              </div>
-              <div style={{ 
-                display: 'flex', 
-                justifyContent: 'space-between',
-                paddingTop: '0.75rem',
-                borderTop: '1px solid #333'
-              }}>
-                <span style={{ color: '#f8f9fa', fontWeight: '500' }}>Saldo:</span>
-                <span style={{ color: '#1ebcc3', fontWeight: '600' }}>R$ 7.480,00</span>
+          <div className="fluxo-card">
+            <h3 className="card-subtitle">Fluxo Atual (Mês)</h3>
+            <div className="fluxo-stats">
+              <div style={{ marginTop: '1rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+                  <span style={{ color: '#f8f9fa' }}>Entradas:</span>
+                  <span style={{ color: '#4CAF50', fontWeight: '500' }}>R$ 42.800,00</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+                  <span style={{ color: '#f8f9fa' }}>Saídas:</span>
+                  <span style={{ color: '#FF5252', fontWeight: '500' }}>R$ 35.320,00</span>
+                </div>
+                <div style={{ 
+                  display: 'flex', 
+                  justifyContent: 'space-between',
+                  paddingTop: '0.75rem',
+                  borderTop: '1px solid #333'
+                }}>
+                  <span style={{ color: '#f8f9fa', fontWeight: '500' }}>Saldo:</span>
+                  <span style={{ color: '#1ebcc3', fontWeight: '600' }}>R$ 7.480,00</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div className="col-4 col-lg-6 col-md-12">
-          <div style={{
-            backgroundColor: '#1e1e1e',
-            borderRadius: '8px',
-            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-            padding: '1.25rem',
-            height: '100%'
-          }}>
-            <h3 style={{ fontSize: '1rem', color: '#a0a0a0', marginBottom: '0.5rem' }}>Fluxo Projetado (Próximo Mês)</h3>
-            <div style={{ marginTop: '1rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-                <span style={{ color: '#f8f9fa' }}>Entradas Previstas:</span>
-                <span style={{ color: '#4CAF50', fontWeight: '500' }}>R$ 46.500,00</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-                <span style={{ color: '#f8f9fa' }}>Saídas Previstas:</span>
-                <span style={{ color: '#FF5252', fontWeight: '500' }}>R$ 38.900,00</span>
-              </div>
-              <div style={{ 
-                display: 'flex', 
-                justifyContent: 'space-between',
-                paddingTop: '0.75rem',
-                borderTop: '1px solid #333'
-              }}>
-                <span style={{ color: '#f8f9fa', fontWeight: '500' }}>Saldo Projetado:</span>
-                <span style={{ color: '#1ebcc3', fontWeight: '600' }}>R$ 7.600,00</span>
+          <div className="fluxo-card">
+            <h3 className="card-subtitle">Fluxo Projetado (Próximo Mês)</h3>
+            <div className="fluxo-stats">
+              <div style={{ marginTop: '1rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+                  <span style={{ color: '#f8f9fa' }}>Entradas Previstas:</span>
+                  <span style={{ color: '#4CAF50', fontWeight: '500' }}>R$ 46.500,00</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+                  <span style={{ color: '#f8f9fa' }}>Saídas Previstas:</span>
+                  <span style={{ color: '#FF5252', fontWeight: '500' }}>R$ 38.900,00</span>
+                </div>
+                <div style={{ 
+                  display: 'flex', 
+                  justifyContent: 'space-between',
+                  paddingTop: '0.75rem',
+                  borderTop: '1px solid #333'
+                }}>
+                  <span style={{ color: '#f8f9fa', fontWeight: '500' }}>Saldo Projetado:</span>
+                  <span style={{ color: '#1ebcc3', fontWeight: '600' }}>R$ 7.600,00</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div className="col-4 col-lg-12">
-          <div style={{
-            backgroundColor: '#1e1e1e',
-            borderRadius: '8px',
-            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-            padding: '1.25rem',
-            height: '100%'
-          }}>
-            <h3 style={{ fontSize: '1rem', color: '#a0a0a0', marginBottom: '0.5rem' }}>Indicadores</h3>
-            <div style={{ marginTop: '1rem' }}>
-              <div style={{ marginBottom: '1rem' }}>
+          <div className="fluxo-card">
+            <h3 className="card-subtitle">Indicadores</h3>
+            <div className="fluxo-stats">
+              <div style={{ marginTop: '1rem' }}>
                 <div style={{ marginBottom: '0.375rem', display: 'flex', justifyContent: 'space-between' }}>
                   <span style={{ fontSize: '0.875rem' }}>Índice de Liquidez</span>
                   <span style={{ fontSize: '0.875rem', fontWeight: '600' }}>1.21</span>
@@ -124,24 +103,14 @@ const FluxoCaixa = () => {
                 </div>
               </div>
               
-              <div style={{ marginBottom: '1rem' }}>
-                <div style={{ marginBottom: '0.375rem', display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ fontSize: '0.875rem' }}>Saúde Financeira</span>
-                  <span style={{ fontSize: '0.875rem', fontWeight: '600' }}>Boa</span>
-                </div>
-                <div style={{ height: '6px', backgroundColor: '#252525', borderRadius: '3px', overflow: 'hidden' }}>
-                  <div style={{ height: '100%', width: '80%', backgroundColor: '#1ebcc3' }}></div>
-                </div>
+              <div style={{ marginBottom: '0.375rem', display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ fontSize: '0.875rem' }}>Saúde Financeira</span>
+                <span style={{ fontSize: '0.875rem', fontWeight: '600' }}>Boa</span>
               </div>
               
-              <div>
-                <div style={{ marginBottom: '0.375rem', display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ fontSize: '0.875rem' }}>Crescimento de Receita</span>
-                  <span style={{ fontSize: '0.875rem', fontWeight: '600' }}>+8.6%</span>
-                </div>
-                <div style={{ height: '6px', backgroundColor: '#252525', borderRadius: '3px', overflow: 'hidden' }}>
-                  <div style={{ height: '100%', width: '60%', backgroundColor: '#FFC107' }}></div>
-                </div>
+              <div style={{ marginBottom: '0.375rem', display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ fontSize: '0.875rem' }}>Crescimento de Receita</span>
+                <span style={{ fontSize: '0.875rem', fontWeight: '600' }}>+8.6%</span>
               </div>
             </div>
           </div>

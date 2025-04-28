@@ -1,0 +1,52 @@
+
+.fluxo-container {
+  padding: 1.5rem;
+}
+
+.fluxo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.fluxo-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.fluxo-card {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1.25rem;
+  height: 100%;
+}
+
+.card-subtitle {
+  font-size: 1rem;
+  color: #a0a0a0;
+  margin-bottom: 0.5rem;
+}
+
+.fluxo-stats {
+  margin-top: 1rem;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.stat-divider {
+  padding-top: 0.75rem;
+  border-top: 1px solid #333;
+}
+
+.progress-bar {
+  height: 6px;
+  background-color: #252525;
+  border-radius: 3px;
+  overflow: hidden;
+}

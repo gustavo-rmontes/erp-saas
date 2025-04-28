@@ -1,6 +1,6 @@
-
 import { useState } from 'react';
 import Chart from '../components/Dashboard/Chart';
+import './Relatorios.css';
 
 const Relatorios = () => {
   const [reportType, setReportType] = useState('fluxo-caixa');
@@ -30,15 +30,10 @@ const Relatorios = () => {
   ];
 
   return (
-    <div style={{ padding: '1.5rem' }}>
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center', 
-        marginBottom: '1.5rem' 
-      }}>
-        <h1 style={{ fontSize: '1.75rem', fontWeight: '600' }}>Relatórios</h1>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+    <div className="relatorios-container">
+      <div className="relatorios-header">
+        <h1 className="relatorios-title">Relatórios</h1>
+        <div>
           <button className="btn btn-outline" style={{ marginRight: '0.75rem' }}>Exportar PDF</button>
           <button className="btn btn-outline">Exportar Excel</button>
         </div>

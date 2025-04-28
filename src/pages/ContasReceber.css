@@ -1,0 +1,106 @@
+
+.contas-container {
+  padding: 1.5rem;
+}
+
+.contas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.contas-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.card-container {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  padding: 1.25rem;
+  height: 100%;
+}
+
+.card-value {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #4CAF50;
+}
+
+.quick-actions {
+  margin-top: 0.75rem;
+}
+
+.table-container {
+  margin-top: 1.5rem;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.search-bar {
+  background-color: #252525;
+  border: 1px solid #333;
+  color: #f8f9fa;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  width: 250px;
+}
+
+.status-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  width: 500px;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.modal-header {
+  padding: 1.25rem;
+  border-bottom: 1px solid #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-close {
+  background-color: transparent;
+  border: none;
+  color: #a0a0a0;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.modal-footer {
+  padding: 1.25rem;
+  border-top: 1px solid #333;
+  display: flex;
+  justify-content: flex-end;
+}

@@ -1,5 +1,5 @@
-
 import { useState } from 'react';
+import './ContasReceber.css';
 
 const ContasReceber = () => {
   const [showModal, setShowModal] = useState(false);
@@ -53,14 +53,9 @@ const ContasReceber = () => {
   };
 
   return (
-    <div style={{ padding: '1.5rem' }}>
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center', 
-        marginBottom: '1.5rem' 
-      }}>
-        <h1 style={{ fontSize: '1.75rem', fontWeight: '600' }}>Contas a Receber</h1>
+    <div className="contas-container">
+      <div className="contas-header">
+        <h1 className="contas-title">Contas a Receber</h1>
         <div>
           <button 
             className="btn btn-primary" 
@@ -73,14 +68,9 @@ const ContasReceber = () => {
 
       <div className="grid">
         <div className="col-4 col-lg-4 col-md-12">
-          <div style={{
-            backgroundColor: '#1e1e1e',
-            borderRadius: '8px',
-            padding: '1.25rem',
-            height: '100%'
-          }}>
+          <div className="card-container">
             <h3 style={{ fontSize: '1rem', color: '#a0a0a0', marginBottom: '0.5rem' }}>Total a Receber</h3>
-            <h2 style={{ fontSize: '2rem', fontWeight: '600', color: '#4CAF50' }}>R$ 17.500,00</h2>
+            <h2 className="card-value">R$ 17.500,00</h2>
             <div style={{ paddingTop: '0.75rem', borderTop: '1px solid #333', marginTop: '0.75rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
                 <span style={{ color: '#a0a0a0' }}>Atrasados:</span>
@@ -94,12 +84,7 @@ const ContasReceber = () => {
           </div>
         </div>
         <div className="col-4 col-lg-4 col-md-12">
-          <div style={{
-            backgroundColor: '#1e1e1e',
-            borderRadius: '8px',
-            padding: '1.25rem',
-            height: '100%'
-          }}>
+          <div className="card-container">
             <h3 style={{ fontSize: '1rem', color: '#a0a0a0', marginBottom: '0.5rem' }}>Próximos Recebimentos</h3>
             <div style={{ marginTop: '0.5rem' }}>
               <div style={{ 
@@ -155,14 +140,9 @@ const ContasReceber = () => {
           </div>
         </div>
         <div className="col-4 col-lg-4 col-md-12">
-          <div style={{
-            backgroundColor: '#1e1e1e',
-            borderRadius: '8px',
-            padding: '1.25rem',
-            height: '100%'
-          }}>
+          <div className="card-container">
             <h3 style={{ fontSize: '1rem', color: '#a0a0a0', marginBottom: '0.5rem' }}>Ações Rápidas</h3>
-            <div style={{ marginTop: '0.75rem' }}>
+            <div className="quick-actions">
               <button className="btn btn-outline" style={{ width: '100%', marginBottom: '0.75rem' }}>
                 Enviar Lembretes Automáticos
               </button>
@@ -180,213 +160,167 @@ const ContasReceber = () => {
         </div>
       </div>
 
-      <div style={{ marginTop: '1.5rem' }}>
-        <div style={{
-          backgroundColor: '#1e1e1e',
-          borderRadius: '8px',
-          overflow: 'hidden'
-        }}>
-          <div style={{ padding: '1.25rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
-              <div style={{ display: 'flex' }}>
-                <input 
-                  type="text" 
-                  placeholder="Buscar conta..." 
-                  style={{
-                    backgroundColor: '#252525',
-                    border: '1px solid #333',
-                    color: '#f8f9fa',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '4px',
-                    marginRight: '0.75rem',
-                    width: '250px'
-                  }}
-                />
-                <select 
-                  style={{
-                    backgroundColor: '#252525',
-                    border: '1px solid #333',
-                    color: '#f8f9fa',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '4px'
-                  }}
-                  value={filterStatus}
-                  onChange={(e) => setFilterStatus(e.target.value)}
-                >
-                  <option value="todas">Todos os status</option>
-                  <option value="pendente">Pendentes</option>
-                  <option value="atrasado">Atrasados</option>
-                  <option value="recebido">Recebidos</option>
-                </select>
-              </div>
-              <div>
-                <button className="btn btn-outline">Exportar</button>
-              </div>
+      <div className="table-container">
+        <div style={{ padding: '1.25rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
+            <div style={{ display: 'flex' }}>
+              <input 
+                type="text" 
+                placeholder="Buscar conta..." 
+                className="search-bar"
+              />
+              <select 
+                style={{
+                  backgroundColor: '#252525',
+                  border: '1px solid #333',
+                  color: '#f8f9fa',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '4px'
+                }}
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+              >
+                <option value="todas">Todos os status</option>
+                <option value="pendente">Pendentes</option>
+                <option value="atrasado">Atrasados</option>
+                <option value="recebido">Recebidos</option>
+              </select>
             </div>
-            
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Cliente</th>
-                  <th>Descrição</th>
-                  <th>Categoria</th>
-                  <th>Vencimento</th>
-                  <th>Valor</th>
-                  <th>Status</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                {contasFiltradas.map((conta) => (
-                  <tr key={conta.id}>
-                    <td>{conta.cliente}</td>
-                    <td>{conta.descricao}</td>
-                    <td>{conta.categoria}</td>
-                    <td>{conta.vencimento}</td>
-                    <td>R$ {conta.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
-                    <td>
-                      <span style={{
-                        color: statusColor(conta.status),
-                        backgroundColor: `${statusColor(conta.status)}15`,
-                        padding: '0.25rem 0.5rem',
-                        borderRadius: '4px',
-                        fontSize: '0.875rem'
-                      }}>
-                        {statusText(conta.status)}
-                      </span>
-                    </td>
-                    <td>
-                      {conta.status !== 'recebido' && (
-                        <button style={{
-                          backgroundColor: 'transparent',
-                          border: 'none',
-                          color: '#4CAF50',
-                          marginRight: '0.5rem',
-                          cursor: 'pointer'
-                        }}>
-                          Receber
-                        </button>
-                      )}
-                      {conta.status === 'atrasado' && (
-                        <button style={{
-                          backgroundColor: 'transparent',
-                          border: 'none',
-                          color: '#FFC107',
-                          marginRight: '0.5rem',
-                          cursor: 'pointer'
-                        }}>
-                          Cobrar
-                        </button>
-                      )}
+            <div>
+              <button className="btn btn-outline">Exportar</button>
+            </div>
+          </div>
+          
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Descrição</th>
+                <th>Categoria</th>
+                <th>Vencimento</th>
+                <th>Valor</th>
+                <th>Status</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {contasFiltradas.map((conta) => (
+                <tr key={conta.id}>
+                  <td>{conta.cliente}</td>
+                  <td>{conta.descricao}</td>
+                  <td>{conta.categoria}</td>
+                  <td>{conta.vencimento}</td>
+                  <td>R$ {conta.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
+                  <td>
+                    <span className="status-badge" style={{
+                      color: statusColor(conta.status),
+                      backgroundColor: `${statusColor(conta.status)}15`,
+                    }}>
+                      {statusText(conta.status)}
+                    </span>
+                  </td>
+                  <td>
+                    {conta.status !== 'recebido' && (
                       <button style={{
                         backgroundColor: 'transparent',
                         border: 'none',
-                        color: '#1ebcc3',
+                        color: '#4CAF50',
                         marginRight: '0.5rem',
                         cursor: 'pointer'
                       }}>
-                        Editar
+                        Receber
                       </button>
+                    )}
+                    {conta.status === 'atrasado' && (
                       <button style={{
                         backgroundColor: 'transparent',
                         border: 'none',
-                        color: '#FF5252',
+                        color: '#FFC107',
+                        marginRight: '0.5rem',
                         cursor: 'pointer'
                       }}>
-                        Excluir
+                        Cobrar
                       </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1rem' }}>
-              <div style={{ color: '#a0a0a0' }}>
-                Exibindo {contasFiltradas.length} de {contas.length} registros
-              </div>
-              <div style={{ display: 'flex' }}>
-                <button style={{
-                  padding: '0.375rem 0.75rem',
-                  backgroundColor: 'transparent',
-                  border: '1px solid #333',
-                  color: '#a0a0a0',
-                  borderRadius: '4px 0 0 4px',
-                  cursor: 'pointer'
-                }}>
-                  Anterior
-                </button>
-                <button style={{
-                  padding: '0.375rem 0.75rem',
-                  backgroundColor: '#1ebcc3',
-                  border: '1px solid #1ebcc3',
-                  color: '#fff',
-                  cursor: 'pointer'
-                }}>
-                  1
-                </button>
-                <button style={{
-                  padding: '0.375rem 0.75rem',
-                  backgroundColor: 'transparent',
-                  border: '1px solid #333',
-                  color: '#a0a0a0',
-                  cursor: 'pointer'
-                }}>
-                  2
-                </button>
-                <button style={{
-                  padding: '0.375rem 0.75rem',
-                  backgroundColor: 'transparent',
-                  border: '1px solid #333',
-                  color: '#a0a0a0',
-                  borderRadius: '0 4px 4px 0',
-                  cursor: 'pointer'
-                }}>
-                  Próximo
-                </button>
-              </div>
+                    )}
+                    <button style={{
+                      backgroundColor: 'transparent',
+                      border: 'none',
+                      color: '#1ebcc3',
+                      marginRight: '0.5rem',
+                      cursor: 'pointer'
+                    }}>
+                      Editar
+                    </button>
+                    <button style={{
+                      backgroundColor: 'transparent',
+                      border: 'none',
+                      color: '#FF5252',
+                      cursor: 'pointer'
+                    }}>
+                      Excluir
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          
+          <div className="table-footer">
+            <div style={{ color: '#a0a0a0' }}>
+              Exibindo {contasFiltradas.length} de {contas.length} registros
+            </div>
+            <div style={{ display: 'flex' }}>
+              <button style={{
+                padding: '0.375rem 0.75rem',
+                backgroundColor: 'transparent',
+                border: '1px solid #333',
+                color: '#a0a0a0',
+                borderRadius: '4px 0 0 4px',
+                cursor: 'pointer'
+              }}>
+                Anterior
+              </button>
+              <button style={{
+                padding: '0.375rem 0.75rem',
+                backgroundColor: '#1ebcc3',
+                border: '1px solid #1ebcc3',
+                color: '#fff',
+                cursor: 'pointer'
+              }}>
+                1
+              </button>
+              <button style={{
+                padding: '0.375rem 0.75rem',
+                backgroundColor: 'transparent',
+                border: '1px solid #333',
+                color: '#a0a0a0',
+                cursor: 'pointer'
+              }}>
+                2
+              </button>
+              <button style={{
+                padding: '0.375rem 0.75rem',
+                backgroundColor: 'transparent',
+                border: '1px solid #333',
+                color: '#a0a0a0',
+                borderRadius: '0 4px 4px 0',
+                cursor: 'pointer'
+              }}>
+                Próximo
+              </button>
             </div>
           </div>
         </div>
       </div>
       
       {showModal && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          zIndex: 1000
-        }}>
-          <div style={{
-            width: '500px',
-            backgroundColor: '#1e1e1e',
-            borderRadius: '8px',
-            boxShadow: '0 10px 25px rgba(0, 0, 0, 0.3)',
-            overflow: 'hidden'
-          }}>
-            <div style={{
-              padding: '1.25rem',
-              borderBottom: '1px solid #333',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center'
-            }}>
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header">
               <h2 style={{ fontSize: '1.25rem', fontWeight: '500' }}>Nova Conta a Receber</h2>
               <button 
                 onClick={() => setShowModal(false)}
-                style={{
-                  backgroundColor: 'transparent',
-                  border: 'none',
-                  color: '#a0a0a0',
-                  fontSize: '1.5rem',
-                  cursor: 'pointer'
-                }}
+                className="modal-close"
               >
                 ×
               </button>
@@ -452,12 +386,7 @@ const ContasReceber = () => {
               </div>
             </div>
             
-            <div style={{
-              padding: '1.25rem',
-              borderTop: '1px solid #333',
-              display: 'flex',
-              justifyContent: 'flex-end'
-            }}>
+            <div className="modal-footer">
               <button 
                 className="btn btn-outline" 
                 onClick={() => setShowModal(false)}
