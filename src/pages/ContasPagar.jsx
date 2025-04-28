@@ -1,31 +1,60 @@
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getContasPagar, createContaPagar, updateContaPagar, deleteContaPagar } from '../services/contasPagarService';
+import { toast } from 'sonner';
 
 const ContasPagar = () => {
   const [showModal, setShowModal] = useState(false);
   const [filterStatus, setFilterStatus] = useState('todas');
+  const [contas, setContas] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   
-  // Dados fictícios
-  const contas = [
-    { id: 1, descricao: 'Aluguel do escritório', valor: 3500.00, vencimento: '29/04/2025', status: 'pendente', categoria: 'Despesas Fixas', fornecedor: 'Imobiliária Central' },
-    { id: 2, descricao: 'Fornecedor XYZ', valor: 1820.00, vencimento: '28/04/2025', status: 'pendente', categoria: 'Fornecedores', fornecedor: 'XYZ Comércio Ltda' },
-    { id: 3, descricao: 'Internet e Telefonia', valor: 750.00, vencimento: '05/05/2025', status: 'pendente', categoria: 'Despesas Fixas', fornecedor: 'Telecom SA' },
-    { id: 4, descricao: 'Energia Elétrica', valor: 1200.00, vencimento: '10/05/2025', status: 'pendente', categoria: 'Despesas Fixas', fornecedor: 'Energia S/A' },
-    { id: 5, descricao: 'Consultoria Financeira', valor: 2500.00, vencimento: '15/05/2025', status: 'pendente', categoria: 'Serviços', fornecedor: 'Consultoria Finance' },
-    { id: 6, descricao: 'Manutenção Sistemas', valor: 1800.00, vencimento: '15/04/2025', status: 'pago', categoria: 'TI', fornecedor: 'Tech Solutions' },
-    { id: 7, descricao: 'Impostos Municipais', valor: 1250.00, vencimento: '20/04/2025', status: 'pago', categoria: 'Impostos', fornecedor: 'Prefeitura Municipal' },
-    { id: 8, descricao: 'Material de Escritório', valor: 350.00, vencimento: '10/04/2025', status: 'pago', categoria: 'Materiais', fornecedor: 'Papelaria Total' },
-    { id: 9, descricao: 'Limpeza e Conservação', valor: 650.00, vencimento: '05/04/2025', status: 'pago', categoria: 'Serviços', fornecedor: 'Clean Services' },
-    { id: 10, descricao: 'Serviço de Contabilidade', valor: 1500.00, vencimento: '18/04/2025', status: 'pago', categoria: 'Serviços', fornecedor: 'Contabilidade Express' },
-    { id: 11, descricao: 'Desenvolvimento de Website', valor: 4500.00, vencimento: '25/03/2025', status: 'vencido', categoria: 'TI', fornecedor: 'Web Developers Inc.' },
-    { id: 12, descricao: 'Seguro Empresarial', valor: 2800.00, vencimento: '15/03/2025', status: 'vencido', categoria: 'Seguros', fornecedor: 'Segurança Total' },
-  ];
-  
+  useEffect(() => {
+    fetchContas();
+  }, []);
+
+  const fetchContas = async () => {
+    try {
+      setIsLoading(true);
+      const data = await getContasPagar();
+      setContas(data);
+    } catch (error) {
+      toast.error('Erro ao carregar contas a pagar');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSaveConta = async (conta) => {
+    try {
+      if (conta.id) {
+        await updateContaPagar(conta.id, conta);
+        toast.success('Conta atualizada com sucesso');
+      } else {
+        await createContaPagar(conta);
+        toast.success('Conta criada com sucesso');
+      }
+      setShowModal(false);
+      fetchContas();
+    } catch (error) {
+      toast.error('Erro ao salvar conta');
+    }
+  };
+
+  const handleDeleteConta = async (id) => {
+    try {
+      await deleteContaPagar(id);
+      toast.success('Conta excluída com sucesso');
+      fetchContas();
+    } catch (error) {
+      toast.error('Erro ao excluir conta');
+    }
+  };
+
   const contasFiltradas = contas.filter(conta => {
     if (filterStatus === 'todas') return true;
     return conta.status === filterStatus;
   });
-  
+
   const statusColor = (status) => {
     switch (status) {
       case 'pago':
@@ -38,7 +67,7 @@ const ContasPagar = () => {
         return '#a0a0a0';
     }
   };
-  
+
   const statusText = (status) => {
     switch (status) {
       case 'pago':
@@ -488,6 +517,7 @@ const ContasPagar = () => {
               </button>
               <button 
                 className="btn btn-primary"
+                onClick={() => handleSaveConta({})}
               >
                 Salvar Conta
               </button>

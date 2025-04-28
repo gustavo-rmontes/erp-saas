@@ -1,39 +1,37 @@
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import DashboardCard from '../components/Dashboard/DashboardCard';
 import Chart from '../components/Dashboard/Chart';
+import { getDashboardData, getFluxoCaixaData } from '../services/dashboardService';
+import { toast } from 'sonner';
 
 const Dashboard = () => {
   const [timeRange, setTimeRange] = useState('month');
+  const [dashboardData, setDashboardData] = useState(null);
+  const [fluxoCaixaData, setFluxoCaixaData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Dados fictícios para os gráficos
-  const fluxoCaixaData = [
-    { name: 'Jan', receitas: 15000, despesas: 12000 },
-    { name: 'Fev', receitas: 16200, despesas: 13500 },
-    { name: 'Mar', receitas: 14800, despesas: 12800 },
-    { name: 'Abr', receitas: 18000, despesas: 14500 },
-    { name: 'Mai', receitas: 17200, despesas: 14000 },
-    { name: 'Jun', receitas: 19500, despesas: 15000 },
-    { name: 'Jul', receitas: 20100, despesas: 16000 },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const data = await getDashboardData();
+        const fluxoData = await getFluxoCaixaData();
+        
+        setDashboardData(data);
+        setFluxoCaixaData(fluxoData);
+      } catch (error) {
+        toast.error('Erro ao carregar dados do dashboard');
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  const saldoData = [
-    { name: 'Jan', saldo: 3000 },
-    { name: 'Fev', saldo: 2700 },
-    { name: 'Mar', saldo: 2000 },
-    { name: 'Abr', saldo: 3500 },
-    { name: 'Mai', saldo: 3200 },
-    { name: 'Jun', saldo: 4500 },
-    { name: 'Jul', saldo: 4100 },
-  ];
+    fetchData();
+  }, []);
 
-  const despesasCategoriasData = [
-    { name: 'Pessoal', value: 8500 },
-    { name: 'Marketing', value: 2300 },
-    { name: 'Operacional', value: 3500 },
-    { name: 'Impostos', value: 4200 },
-    { name: 'Outros', value: 1500 },
-  ];
+  if (isLoading) {
+    return <div>Carregando...</div>;
+  }
 
   return (
     <div style={{ padding: '1.5rem' }}>
@@ -72,43 +70,43 @@ const Dashboard = () => {
         <div className="col-3 col-lg-6 col-md-12">
           <DashboardCard 
             title="Saldo Consolidado" 
-            value="R$ 32.540,75" 
+            value={dashboardData?.saldoConsolidado?.valor} 
             icon="💰" 
             color="#1ebcc3"
-            change="12% em relação ao mês anterior" 
-            changeType="positive"
-            footer="Atualizado: 28/04/2025 12:45"
+            change={dashboardData?.saldoConsolidado?.variacao}
+            changeType={dashboardData?.saldoConsolidado?.variacaoTipo}
+            footer={`Atualizado: ${dashboardData?.saldoConsolidado?.ultimaAtualizacao}`}
           />
         </div>
         <div className="col-3 col-lg-6 col-md-12">
           <DashboardCard 
             title="Contas a Pagar" 
-            value="R$ 8.320,00" 
+            value={dashboardData?.contasPagar?.valor}
             icon="📉" 
             color="#FF5252"
-            change="3 vencendo hoje" 
-            footer="Próximo vencimento: 29/04/2025"
+            change={dashboardData?.contasPagar?.vencimentosHoje}
+            footer={`Próximo vencimento: ${dashboardData?.contasPagar?.proximoVencimento}`}
           />
         </div>
         <div className="col-3 col-lg-6 col-md-12">
           <DashboardCard 
             title="Contas a Receber" 
-            value="R$ 15.750,00" 
+            value={dashboardData?.contasReceber?.valor}
             icon="📈" 
             color="#4CAF50"
-            change="2 recebimentos hoje" 
+            change={dashboardData?.contasReceber?.recebimentosHoje}
             changeType="positive"
-            footer="Próximo recebimento: 30/04/2025"
+            footer={`Próximo recebimento: ${dashboardData?.contasReceber?.proximoRecebimento}`}
           />
         </div>
         <div className="col-3 col-lg-6 col-md-12">
           <DashboardCard 
             title="Projeção de Fluxo" 
-            value="R$ 5.430,00" 
+            value={dashboardData?.projecaoFluxo?.valor}
             icon="💸" 
             color="#FFC107"
-            change="8% em relação ao mês anterior" 
-            changeType="positive"
+            change={dashboardData?.projecaoFluxo?.variacao}
+            changeType={dashboardData?.projecaoFluxo?.variacaoTipo}
             footer="Projeção para os próximos 30 dias"
           />
         </div>
@@ -142,7 +140,7 @@ const Dashboard = () => {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
               <h2 style={{ fontSize: '1.125rem', fontWeight: '500' }}>Despesas por Categoria</h2>
             </div>
-            <Chart type="pie" data={despesasCategoriasData} height={320} />
+            <Chart type="pie" data={[]} height={320} />
           </div>
         </div>
       </div>
@@ -197,7 +195,7 @@ const Dashboard = () => {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
               <h2 style={{ fontSize: '1.125rem', fontWeight: '500' }}>Evolução do Saldo</h2>
             </div>
-            <Chart type="line" data={saldoData} height={250} />
+            <Chart type="line" data={[]} height={250} />
           </div>
         </div>
       </div>
