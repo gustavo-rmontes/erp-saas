@@ -1,6 +1,6 @@
-
 import { useState } from 'react';
 import Chart from '../components/Dashboard/Chart';
+import './Bancos.css';
 
 const Bancos = () => {
   const [activeTab, setActiveTab] = useState('contas');
@@ -41,14 +41,9 @@ const Bancos = () => {
   const saldoTotal = contas.reduce((total, conta) => total + conta.saldo, 0);
   
   return (
-    <div style={{ padding: '1.5rem' }}>
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center', 
-        marginBottom: '1.5rem' 
-      }}>
-        <h1 style={{ fontSize: '1.75rem', fontWeight: '600' }}>Gestão Bancária</h1>
+    <div className="bancos-container">
+      <div className="bancos-header">
+        <h1 className="bancos-title">Gestão Bancária</h1>
         <div>
           <button 
             className="btn btn-outline"
@@ -68,35 +63,25 @@ const Bancos = () => {
 
       <div className="grid">
         <div className="col-4 col-lg-6 col-md-12">
-          <div style={{
-            backgroundColor: '#1e1e1e',
-            borderRadius: '8px',
-            padding: '1.25rem',
-            height: '100%'
-          }}>
-            <h3 style={{ fontSize: '1rem', color: '#a0a0a0', marginBottom: '0.5rem' }}>Saldo Total</h3>
-            <h2 style={{ fontSize: '2rem', fontWeight: '600', color: '#f8f9fa' }}>
+          <div className="saldo-card">
+            <h3 className="saldo-subtitle">Saldo Total</h3>
+            <h2 className="saldo-total">
               R$ {saldoTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
             </h2>
-            <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid #333' }}>
-              <p style={{ color: '#a0a0a0', marginBottom: '1rem' }}>Distribuição por Conta:</p>
+            <div className="distribuicao-container">
+              <p className="distribuicao-title">Distribuição por Conta:</p>
               {contas.map((conta) => (
-                <div key={conta.id} style={{ marginBottom: '0.5rem' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.375rem' }}>
+                <div key={conta.id} className="conta-item">
+                  <div className="conta-header">
                     <span>{conta.nome}</span>
-                    <span style={{ fontWeight: '500' }}>
+                    <span className="conta-valor">
                       R$ {conta.saldo.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                     </span>
                   </div>
-                  <div style={{ height: '4px', backgroundColor: '#252525', borderRadius: '2px' }}>
+                  <div className="progress-bar">
                     <div 
-                      style={{ 
-                        height: '100%', 
-                        width: `${(conta.saldo / saldoTotal) * 100}%`, 
-                        backgroundColor: conta.tipo === 'corrente' ? '#1ebcc3' : 
-                                        conta.tipo === 'poupança' ? '#4CAF50' : '#FFC107',
-                        borderRadius: '2px'
-                      }}
+                      className={`progress-fill progress-fill-${conta.tipo}`}
+                      style={{ width: `${(conta.saldo / saldoTotal) * 100}%` }}
                     ></div>
                   </div>
                 </div>
@@ -105,434 +90,247 @@ const Bancos = () => {
           </div>
         </div>
         <div className="col-8 col-lg-6 col-md-12">
-          <div style={{
-            backgroundColor: '#1e1e1e',
-            borderRadius: '8px',
-            padding: '1.25rem',
-            height: '100%'
-          }}>
-            <h3 style={{ fontSize: '1rem', color: '#a0a0a0', marginBottom: '0.5rem' }}>Evolução do Saldo</h3>
+          <div className="evolucao-card">
+            <h3 className="saldo-subtitle">Evolução do Saldo</h3>
             <Chart type="line" data={historicoSaldo} height={250} />
           </div>
         </div>
       </div>
 
-      <div style={{ marginTop: '1.5rem' }}>
-        <div style={{
-          backgroundColor: '#1e1e1e',
-          borderRadius: '8px',
-          overflow: 'hidden'
-        }}>
-          <div style={{ 
-            display: 'flex', 
-            borderBottom: '1px solid #333' 
-          }}>
-            <button 
-              style={{ 
-                padding: '1rem 1.25rem', 
-                backgroundColor: activeTab === 'contas' ? '#252525' : 'transparent',
-                border: 'none',
-                color: '#f8f9fa',
-                fontWeight: activeTab === 'contas' ? '500' : '400',
-                borderBottom: activeTab === 'contas' ? '2px solid #1ebcc3' : 'none',
-                borderRight: '1px solid #333',
-                cursor: 'pointer'
-              }}
-              onClick={() => setActiveTab('contas')}
-            >
-              Contas Bancárias
-            </button>
-            <button 
-              style={{ 
-                padding: '1rem 1.25rem', 
-                backgroundColor: activeTab === 'transacoes' ? '#252525' : 'transparent',
-                border: 'none',
-                color: '#f8f9fa',
-                fontWeight: activeTab === 'transacoes' ? '500' : '400',
-                borderBottom: activeTab === 'transacoes' ? '2px solid #1ebcc3' : 'none',
-                borderRight: '1px solid #333',
-                cursor: 'pointer'
-              }}
-              onClick={() => setActiveTab('transacoes')}
-            >
-              Transações
-            </button>
-            <button 
-              style={{ 
-                padding: '1rem 1.25rem', 
-                backgroundColor: activeTab === 'alertas' ? '#252525' : 'transparent',
-                border: 'none',
-                color: '#f8f9fa',
-                fontWeight: activeTab === 'alertas' ? '500' : '400',
-                borderBottom: activeTab === 'alertas' ? '2px solid #1ebcc3' : 'none',
-                cursor: 'pointer'
-              }}
-              onClick={() => setActiveTab('alertas')}
-            >
-              Alertas
-            </button>
-          </div>
-          
-          {activeTab === 'contas' && (
-            <div style={{ padding: '1.25rem' }}>
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Nome</th>
-                    <th>Banco</th>
-                    <th>Agência</th>
-                    <th>Conta</th>
-                    <th>Tipo</th>
-                    <th>Saldo</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {contas.map((conta) => (
-                    <tr key={conta.id}>
-                      <td>{conta.nome}</td>
-                      <td>{conta.banco}</td>
-                      <td>{conta.agencia}</td>
-                      <td>{conta.conta}</td>
-                      <td>
-                        <span style={{
-                          color: conta.tipo === 'corrente' ? '#1ebcc3' : 
-                                conta.tipo === 'poupança' ? '#4CAF50' : '#FFC107',
-                          backgroundColor: conta.tipo === 'corrente' ? 'rgba(30, 188, 195, 0.1)' : 
-                                        conta.tipo === 'poupança' ? 'rgba(76, 175, 80, 0.1)' : 'rgba(255, 193, 7, 0.1)',
-                          padding: '0.25rem 0.5rem',
-                          borderRadius: '4px',
-                          fontSize: '0.875rem'
-                        }}>
-                          {conta.tipo.charAt(0).toUpperCase() + conta.tipo.slice(1)}
-                        </span>
-                      </td>
-                      <td style={{ fontWeight: '500' }}>
-                        R$ {conta.saldo.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                      </td>
-                      <td>
-                        <button style={{
-                          backgroundColor: 'transparent',
-                          border: 'none',
-                          color: '#1ebcc3',
-                          marginRight: '0.5rem',
-                          cursor: 'pointer'
-                        }}>
-                          Editar
-                        </button>
-                        <button style={{
-                          backgroundColor: 'transparent',
-                          border: 'none',
-                          color: '#FF5252',
-                          cursor: 'pointer'
-                        }}>
-                          Remover
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-          
-          {activeTab === 'transacoes' && (
-            <div style={{ padding: '1.25rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                <div style={{ display: 'flex' }}>
-                  <input 
-                    type="text" 
-                    placeholder="Buscar transação..." 
-                    style={{
-                      backgroundColor: '#252525',
-                      border: '1px solid #333',
-                      color: '#f8f9fa',
-                      padding: '0.5rem 1rem',
-                      borderRadius: '4px',
-                      marginRight: '0.75rem',
-                      width: '250px'
-                    }}
-                  />
-                  <select style={{
-                    backgroundColor: '#252525',
-                    border: '1px solid #333',
-                    color: '#f8f9fa',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '4px'
-                  }}>
-                    <option value="">Todas as contas</option>
-                    {contas.map((conta) => (
-                      <option key={conta.id} value={conta.id}>{conta.nome}</option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <button className="btn btn-outline">Exportar</button>
-                </div>
-              </div>
-              
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Data</th>
-                    <th>Descrição</th>
-                    <th>Conta</th>
-                    <th>Tipo</th>
-                    <th>Valor</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {transacoes.map((transacao) => (
-                    <tr key={transacao.id}>
-                      <td>{transacao.data}</td>
-                      <td>{transacao.descricao}</td>
-                      <td>{transacao.conta}</td>
-                      <td>
-                        <span style={{
-                          color: transacao.tipo === 'entrada' ? '#4CAF50' : '#FF5252',
-                          backgroundColor: transacao.tipo === 'entrada' ? 'rgba(76, 175, 80, 0.1)' : 'rgba(255, 82, 82, 0.1)',
-                          padding: '0.25rem 0.5rem',
-                          borderRadius: '4px',
-                          fontSize: '0.875rem'
-                        }}>
-                          {transacao.tipo === 'entrada' ? 'Crédito' : 'Débito'}
-                        </span>
-                      </td>
-                      <td style={{ color: transacao.tipo === 'entrada' ? '#4CAF50' : '#FF5252', fontWeight: '500' }}>
-                        {transacao.tipo === 'entrada' ? '+' : '-'} R$ {transacao.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                      </td>
-                      <td>
-                        <button style={{
-                          backgroundColor: 'transparent',
-                          border: 'none',
-                          color: '#1ebcc3',
-                          marginRight: '0.5rem',
-                          cursor: 'pointer'
-                        }}>
-                          Detalhes
-                        </button>
-                        <button style={{
-                          backgroundColor: 'transparent',
-                          border: 'none',
-                          color: '#a0a0a0',
-                          cursor: 'pointer'
-                        }}>
-                          Conciliar
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1rem' }}>
-                <div style={{ color: '#a0a0a0' }}>
-                  Exibindo 1-7 de 42 registros
-                </div>
-                <div style={{ display: 'flex' }}>
-                  <button style={{
-                    padding: '0.375rem 0.75rem',
-                    backgroundColor: 'transparent',
-                    border: '1px solid #333',
-                    color: '#a0a0a0',
-                    borderRadius: '4px 0 0 4px',
-                    cursor: 'pointer'
-                  }}>
-                    Anterior
-                  </button>
-                  <button style={{
-                    padding: '0.375rem 0.75rem',
-                    backgroundColor: '#1ebcc3',
-                    border: '1px solid #1ebcc3',
-                    color: '#fff',
-                    cursor: 'pointer'
-                  }}>
-                    1
-                  </button>
-                  <button style={{
-                    padding: '0.375rem 0.75rem',
-                    backgroundColor: 'transparent',
-                    border: '1px solid #333',
-                    color: '#a0a0a0',
-                    cursor: 'pointer'
-                  }}>
-                    2
-                  </button>
-                  <button style={{
-                    padding: '0.375rem 0.75rem',
-                    backgroundColor: 'transparent',
-                    border: '1px solid #333',
-                    color: '#a0a0a0',
-                    borderRadius: '0 4px 4px 0',
-                    cursor: 'pointer'
-                  }}>
-                    Próximo
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-          
-          {activeTab === 'alertas' && (
-            <div style={{ padding: '1.25rem' }}>
-              <div style={{ marginBottom: '1.5rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                  <h3 style={{ fontSize: '1.125rem', fontWeight: '500' }}>Alertas Recentes</h3>
-                  <button className="btn btn-outline">Configurar Alertas</button>
-                </div>
-                {alertas.map((alerta) => (
-                  <div 
-                    key={alerta.id}
-                    style={{ 
-                      backgroundColor: '#252525', 
-                      borderRadius: '8px', 
-                      padding: '1rem',
-                      marginBottom: '0.75rem',
-                      borderLeft: `4px solid ${
-                        alerta.tipo === 'divergencia' ? '#FF5252' : 
-                        alerta.tipo === 'movimentacao' ? '#FFC107' : '#1ebcc3'
-                      }`
-                    }}
-                  >
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                      <span style={{ 
-                        fontWeight: '500',
-                        color: alerta.tipo === 'divergencia' ? '#FF5252' : 
-                              alerta.tipo === 'movimentacao' ? '#FFC107' : '#1ebcc3'
-                      }}>
-                        {alerta.tipo === 'divergencia' ? '⚠️ Alerta de Divergência' : 
-                        alerta.tipo === 'movimentacao' ? '🔍 Movimentação Suspeita' : '💰 Alerta de Saldo'}
-                      </span>
-                      <span style={{ fontSize: '0.875rem', color: '#a0a0a0' }}>{alerta.data}</span>
-                    </div>
-                    <p style={{ marginBottom: '0.5rem' }}>{alerta.descricao}</p>
-                    {alerta.valor && (
-                      <p style={{ fontSize: '0.875rem', color: '#a0a0a0' }}>
-                        Valor: R$ {alerta.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                      </p>
-                    )}
-                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0.5rem' }}>
-                      <button
-                        style={{
-                          backgroundColor: 'transparent',
-                          border: 'none',
-                          color: '#1ebcc3',
-                          cursor: 'pointer',
-                          fontSize: '0.875rem'
-                        }}
-                      >
-                        Verificar
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              
-              <div>
-                <h3 style={{ fontSize: '1.125rem', fontWeight: '500', marginBottom: '1rem' }}>Recomendações</h3>
-                <div
-                  style={{ 
-                    backgroundColor: '#252525', 
-                    borderRadius: '8px', 
-                    padding: '1rem',
-                    marginBottom: '0.75rem'
-                  }}
-                >
-                  <h4 style={{ fontWeight: '500', marginBottom: '0.5rem' }}>Otimização de Contas</h4>
-                  <p style={{ fontSize: '0.875rem', marginBottom: '0.5rem' }}>
-                    Você possui R$ 28.750,40 em conta poupança. Este valor poderia render mais em investimentos de renda fixa.
-                  </p>
-                  <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <button
-                      style={{
-                        backgroundColor: 'transparent',
-                        border: 'none',
-                        color: '#1ebcc3',
-                        cursor: 'pointer',
-                        fontSize: '0.875rem'
-                      }}
-                    >
-                      Ver opções
-                    </button>
-                  </div>
-                </div>
-                
-                <div
-                  style={{ 
-                    backgroundColor: '#252525', 
-                    borderRadius: '8px', 
-                    padding: '1rem',
-                    marginBottom: '0.75rem'
-                  }}
-                >
-                  <h4 style={{ fontWeight: '500', marginBottom: '0.5rem' }}>Análise de Taxas</h4>
-                  <p style={{ fontSize: '0.875rem', marginBottom: '0.5rem' }}>
-                    Sua conta no Banco A possui taxas mensais mais altas que a média do mercado. Considere negociar ou trocar de banco.
-                  </p>
-                  <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <button
-                      style={{
-                        backgroundColor: 'transparent',
-                        border: 'none',
-                        color: '#1ebcc3',
-                        cursor: 'pointer',
-                        fontSize: '0.875rem'
-                      }}
-                    >
-                      Comparar taxas
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+      <div className="tabs-container">
+        <div className="tabs-header">
+          <button 
+            className={`tab-button ${activeTab === 'contas' ? 'active' : ''}`}
+            onClick={() => setActiveTab('contas')}
+          >
+            Contas Bancárias
+          </button>
+          <button 
+            className={`tab-button ${activeTab === 'transacoes' ? 'active' : ''}`}
+            onClick={() => setActiveTab('transacoes')}
+          >
+            Transações
+          </button>
+          <button 
+            className={`tab-button ${activeTab === 'alertas' ? 'active' : ''}`}
+            onClick={() => setActiveTab('alertas')}
+          >
+            Alertas
+          </button>
         </div>
+        
+        {activeTab === 'contas' && (
+          <div className="tab-content">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Banco</th>
+                  <th>Agência</th>
+                  <th>Conta</th>
+                  <th>Tipo</th>
+                  <th>Saldo</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {contas.map((conta) => (
+                  <tr key={conta.id}>
+                    <td>{conta.nome}</td>
+                    <td>{conta.banco}</td>
+                    <td>{conta.agencia}</td>
+                    <td>{conta.conta}</td>
+                    <td>
+                      <span className={`badge badge-${conta.tipo}`}>
+                        {conta.tipo.charAt(0).toUpperCase() + conta.tipo.slice(1)}
+                      </span>
+                    </td>
+                    <td className="conta-valor">
+                      R$ {conta.saldo.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                    </td>
+                    <td>
+                      <button className="action-button action-button-edit">
+                        Editar
+                      </button>
+                      <button className="action-button action-button-delete">
+                        Remover
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+        
+        {activeTab === 'transacoes' && (
+          <div className="tab-content">
+            <div className="table-actions">
+              <div style={{ display: 'flex' }}>
+                <input 
+                  type="text" 
+                  placeholder="Buscar transação..." 
+                  className="search-input"
+                />
+                <select className="filter-select">
+                  <option value="">Todas as contas</option>
+                  {contas.map((conta) => (
+                    <option key={conta.id} value={conta.id}>{conta.nome}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <button className="btn btn-outline">Exportar</button>
+              </div>
+            </div>
+            
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Descrição</th>
+                  <th>Conta</th>
+                  <th>Tipo</th>
+                  <th>Valor</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {transacoes.map((transacao) => (
+                  <tr key={transacao.id}>
+                    <td>{transacao.data}</td>
+                    <td>{transacao.descricao}</td>
+                    <td>{transacao.conta}</td>
+                    <td>
+                      <span style={{
+                        color: transacao.tipo === 'entrada' ? '#4CAF50' : '#FF5252',
+                        backgroundColor: transacao.tipo === 'entrada' ? 'rgba(76, 175, 80, 0.1)' : 'rgba(255, 82, 82, 0.1)',
+                        padding: '0.25rem 0.5rem',
+                        borderRadius: '4px',
+                        fontSize: '0.875rem'
+                      }}>
+                        {transacao.tipo === 'entrada' ? 'Crédito' : 'Débito'}
+                      </span>
+                    </td>
+                    <td style={{ color: transacao.tipo === 'entrada' ? '#4CAF50' : '#FF5252', fontWeight: '500' }}>
+                      {transacao.tipo === 'entrada' ? '+' : '-'} R$ {transacao.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                    </td>
+                    <td>
+                      <button style={{
+                        backgroundColor: 'transparent',
+                        border: 'none',
+                        color: '#1ebcc3',
+                        marginRight: '0.5rem',
+                        cursor: 'pointer'
+                      }}>
+                        Detalhes
+                      </button>
+                      <button style={{
+                        backgroundColor: 'transparent',
+                        border: 'none',
+                        color: '#a0a0a0',
+                        cursor: 'pointer'
+                      }}>
+                        Conciliar
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            
+            <div className="pagination">
+              <div className="pagination-info">
+                Exibindo 1-7 de 42 registros
+              </div>
+              <div className="pagination-controls">
+                <button className="pagination-button">Anterior</button>
+                <button className="pagination-button active">1</button>
+                <button className="pagination-button">2</button>
+                <button className="pagination-button">Próximo</button>
+              </div>
+            </div>
+          </div>
+        )}
+        
+        {activeTab === 'alertas' && (
+          <div className="tab-content">
+            <div style={{ marginBottom: '1.5rem' }}>
+              <div className="bancos-header">
+                <h3 className="recomendacao-titulo">Alertas Recentes</h3>
+                <button className="btn btn-outline">Configurar Alertas</button>
+              </div>
+              {alertas.map((alerta) => (
+                <div 
+                  key={alerta.id}
+                  className={`alerta-item alerta-${alerta.tipo}`}
+                >
+                  <div className="alerta-header">
+                    <span className="alerta-tipo">
+                      {alerta.tipo === 'divergencia' ? '⚠️ Alerta de Divergência' : 
+                      alerta.tipo === 'movimentacao' ? '🔍 Movimentação Suspeita' : '💰 Alerta de Saldo'}
+                    </span>
+                    <span className="alerta-data">{alerta.data}</span>
+                  </div>
+                  <p>{alerta.descricao}</p>
+                  {alerta.valor && (
+                    <p className="recomendacao-texto">
+                      Valor: R$ {alerta.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                    </p>
+                  )}
+                  <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <button className="action-button action-button-edit">
+                      Verificar
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            <div>
+              <h3 className="recomendacao-titulo">Recomendações</h3>
+              <div className="recomendacao-card">
+                <h4 className="recomendacao-titulo">Otimização de Contas</h4>
+                <p className="recomendacao-texto">
+                  Você possui R$ 28.750,40 em conta poupança. Este valor poderia render mais em investimentos de renda fixa.
+                </p>
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                  <button className="action-button action-button-edit">
+                    Ver opções
+                  </button>
+                </div>
+              </div>
+              
+              <div className="recomendacao-card">
+                <h4 className="recomendacao-titulo">Análise de Taxas</h4>
+                <p className="recomendacao-texto">
+                  Sua conta no Banco A possui taxas mensais mais altas que a média do mercado. Considere negociar ou trocar de banco.
+                </p>
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                  <button className="action-button action-button-edit">
+                    Comparar taxas
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
       
       {showModal && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          zIndex: 1000
-        }}>
-          <div style={{
-            width: '500px',
-            backgroundColor: '#1e1e1e',
-            borderRadius: '8px',
-            boxShadow: '0 10px 25px rgba(0, 0, 0, 0.3)',
-            overflow: 'hidden'
-          }}>
-            <div style={{
-              padding: '1.25rem',
-              borderBottom: '1px solid #333',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center'
-            }}>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: '500' }}>Nova Conta Bancária</h2>
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h2 className="modal-title">Nova Conta Bancária</h2>
               <button 
                 onClick={() => setShowModal(false)}
-                style={{
-                  backgroundColor: 'transparent',
-                  border: 'none',
-                  color: '#a0a0a0',
-                  fontSize: '1.5rem',
-                  cursor: 'pointer'
-                }}
+                className="modal-close"
               >
                 ×
               </button>
             </div>
             
-            <div style={{ padding: '1.25rem' }}>
+            <div className="modal-body">
               <div className="form-group">
                 <label className="form-label">Nome da Conta</label>
                 <input type="text" className="form-control" placeholder="Ex: Conta Principal" />
@@ -580,12 +378,7 @@ const Bancos = () => {
               </div>
             </div>
             
-            <div style={{
-              padding: '1.25rem',
-              borderTop: '1px solid #333',
-              display: 'flex',
-              justifyContent: 'flex-end'
-            }}>
+            <div className="modal-footer">
               <button 
                 className="btn btn-outline" 
                 onClick={() => setShowModal(false)}
@@ -593,9 +386,7 @@ const Bancos = () => {
               >
                 Cancelar
               </button>
-              <button 
-                className="btn btn-primary"
-              >
+              <button className="btn btn-primary">
                 Adicionar Conta
               </button>
             </div>

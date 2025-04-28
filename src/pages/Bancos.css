@@ -1,0 +1,324 @@
+
+.bancos-container {
+  padding: 1.5rem;
+}
+
+.bancos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.bancos-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.saldo-card {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  padding: 1.25rem;
+  height: 100%;
+}
+
+.saldo-subtitle {
+  font-size: 1rem;
+  color: #a0a0a0;
+  margin-bottom: 0.5rem;
+}
+
+.saldo-total {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #f8f9fa;
+}
+
+.distribuicao-container {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #333;
+}
+
+.distribuicao-title {
+  color: #a0a0a0;
+  margin-bottom: 1rem;
+}
+
+.conta-item {
+  margin-bottom: 0.5rem;
+}
+
+.conta-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.375rem;
+}
+
+.conta-valor {
+  font-weight: 500;
+}
+
+.progress-bar {
+  height: 4px;
+  background-color: #252525;
+  border-radius: 2px;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 2px;
+}
+
+.progress-fill-corrente {
+  background-color: #1ebcc3;
+}
+
+.progress-fill-poupanca {
+  background-color: #4CAF50;
+}
+
+.progress-fill-investimento {
+  background-color: #FFC107;
+}
+
+.evolucao-card {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  padding: 1.25rem;
+  height: 100%;
+}
+
+.tabs-container {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 1.5rem;
+}
+
+.tabs-header {
+  display: flex;
+  border-bottom: 1px solid #333;
+}
+
+.tab-button {
+  padding: 1rem 1.25rem;
+  background-color: transparent;
+  border: none;
+  color: #f8f9fa;
+  font-weight: 400;
+  border-right: 1px solid #333;
+  cursor: pointer;
+}
+
+.tab-button.active {
+  background-color: #252525;
+  font-weight: 500;
+  border-bottom: 2px solid #1ebcc3;
+}
+
+.tab-content {
+  padding: 1.25rem;
+}
+
+.table-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.search-input {
+  background-color: #252525;
+  border: 1px solid #333;
+  color: #f8f9fa;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  margin-right: 0.75rem;
+  width: 250px;
+}
+
+.filter-select {
+  background-color: #252525;
+  border: 1px solid #333;
+  color: #f8f9fa;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+
+.action-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.action-button-edit {
+  color: #1ebcc3;
+  margin-right: 0.5rem;
+}
+
+.action-button-delete {
+  color: #FF5252;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.pagination-info {
+  color: #a0a0a0;
+}
+
+.pagination-controls {
+  display: flex;
+}
+
+.pagination-button {
+  padding: 0.375rem 0.75rem;
+  background-color: transparent;
+  border: 1px solid #333;
+  color: #a0a0a0;
+  cursor: pointer;
+}
+
+.pagination-button.active {
+  background-color: #1ebcc3;
+  border: 1px solid #1ebcc3;
+  color: #fff;
+}
+
+.pagination-button:first-child {
+  border-radius: 4px 0 0 4px;
+}
+
+.pagination-button:last-child {
+  border-radius: 0 4px 4px 0;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  width: 500px;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.modal-header {
+  padding: 1.25rem;
+  border-bottom: 1px solid #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.modal-close {
+  background-color: transparent;
+  border: none;
+  color: #a0a0a0;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 1.25rem;
+}
+
+.modal-footer {
+  padding: 1.25rem;
+  border-top: 1px solid #333;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.badge-corrente {
+  color: #1ebcc3;
+  background-color: rgba(30, 188, 195, 0.1);
+}
+
+.badge-poupanca {
+  color: #4CAF50;
+  background-color: rgba(76, 175, 80, 0.1);
+}
+
+.badge-investimento {
+  color: #FFC107;
+  background-color: rgba(255, 193, 7, 0.1);
+}
+
+.alerta-item {
+  background-color: #252525;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.alerta-divergencia {
+  border-left: 4px solid #FF5252;
+}
+
+.alerta-movimentacao {
+  border-left: 4px solid #FFC107;
+}
+
+.alerta-saldo {
+  border-left: 4px solid #1ebcc3;
+}
+
+.alerta-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.alerta-tipo {
+  font-weight: 500;
+}
+
+.alerta-data {
+  font-size: 0.875rem;
+  color: #a0a0a0;
+}
+
+.recomendacao-card {
+  background-color: #252525;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.recomendacao-titulo {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.recomendacao-texto {
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
